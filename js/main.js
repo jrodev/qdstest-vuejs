@@ -81,8 +81,9 @@ const App = new Vue({
       var headers = new Headers({ "Content-Type": "application/json" });
       var initial = { method:"POST", body: JSON.stringify(oStep1), headers:headers, mode:"cors", cache:"default" };
 
-      //var endPoint = `https://testsoat.interseguro.com.pe/talentfestapi/cotizacion`;
-      var endPoint = `http://qdstest.laravel.local/api/destinos`;
+      // var endPoint = `https://testsoat.interseguro.com.pe/talentfestapi/cotizacion`;
+      // var endPoint = `http://qdstest.laravel.local/api/destinos`;
+      var endPoint = `https://qdstest-laravel.herokuapp.com/api/destinos`;
 
       fetch(endPoint, initial).then(res => {
         res.json().then(json => {
@@ -100,8 +101,9 @@ const App = new Vue({
       var headers = new Headers({ "Content-Type": "application/json" });
       var initial = { method:"GET", headers:headers, mode:"cors", cache:"default" };
 
-      //var endPoint = `https://testsoat.interseguro.com.pe/talentfestapi/destinos/${escape(search)}`;
-      var endPoint = `http://qdstest.laravel.local/api/destinos/${escape(search)}`;
+      // var endPoint = `https://testsoat.interseguro.com.pe/talentfestapi/destinos/${escape(search)}`;
+      // var endPoint = `http://qdstest.laravel.local/api/destinos/${escape(search)}`;
+      var endPoint = `https://qdstest-laravel.herokuapp.com/api/destinos/${escape(search)}`;
 
       fetch(endPoint, initial).then(res => {
         res.json().then(json => {
