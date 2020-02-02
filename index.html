@@ -1,12 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>QDSTEST - Cotizador de Seguro de Viajes</title>
-</head>
-<body>
-    hi!
-</body>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/vue-select/dist/vue-select.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    /><!--https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/font-awesome.min.css-->
+    
+    
+
+    <script src="https://unpkg.com/vue@latest"></script>
+    <script src="https://unpkg.com/vue-select@latest"></script>
+    <script src="https://unpkg.com/lodash@latest/lodash.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/styles.css?v=SD45FW456F5S4DDF7" />
+  </head>
+  <body>
+
+    <form method="POST" action="">
+      <div class="container">
+        <div id="app">
+
+          <!-- Loading component -->
+          <!--
+          <loading :active.sync="visible" :can-cancel="true"></loading>
+          <button @click.prevent="loadingOpen()">Programmatic show</button>
+          <button @click.prevent="loadingShow()">Component show, cancellable</button>
+          -->
+          <!-- Steps Wizard -->
+          <step-navigation :steps="steps" :currentstep="currentstep">
+          </step-navigation>
+
+          <div v-show="currentstep == 1">
+            <!--
+            <h3>Step 1</h3>
+            <p class="h4 mb-4">Sign up</p>
+            -->
+            <div class="form-row mb-4">
+
+              <div class="col-12 col-sm-12 col-md-6 col-xl-6">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Elija ciudad</label>
+                  <v-select label="name" :class=" validate ? ( (oStep1.destino==''||oStep1.destino==null) ? 'is-invalid' : 'is-valid' ) : '' " :filterable="false" v-model="oStep1.destino" :options="options" @search="onSearch">
+                    <template slot="no-options">
+                      escribas ciudad destino...
+                    </template>
+                    <template slot="option" slot-scope="option">
+                      <div class="d-center">
+                        <!--img :src='option.owner.avatar_url'/-->
+                        {{ option.value }}
+                      </div>
+                    </template>
+                    <template slot="selected-option" slot-scope="option">
+                      <div class="selected d-center text-truncate" style="max-width: 230px">
+                        <!--img :src='option.owner.avatar_url'/-->
+                        {{ option.value }}
+                      </div>
+                    </template>
+                  </v-select>
+                  <small class="form-text text-muted">Escriba el nombre de ciudad y elija la mejor coincidencia</small>
+                </div>
+                <!--input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name"-->
+              </div>
+
+              <div class="col-12 col-sm-4 col-md-6 col-xl-6">
+                <div class="form-group">
+                  <label for="numPas">Numero pasajeros</label>
+                  <input 
+                    id="numPas" 
+                    type="number" 
+                    class="form-control" 
+                    v-model.number="oStep1.cantidad_pasajeros" 
+                    placeholder="Numero Pasajeros" 
+                    :class="validate ? ( (oStep1.cantidad_pasajeros==''||oStep1.cantidad_pasajeros==0) ? 'is-invalid' : 'is-valid' ) : '' "
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-4 col-md-6 col-xl-6">
+                <div class="form-group">
+                  <label for="fecPar">Fecha partida</label>
+                  <input 
+                    id="fecPar" 
+                    type="date" 
+                    class="form-control" 
+                    v-model="oStep1.fecha_partida" 
+                    placeholder="Fecha partida" 
+                    :class="validate ? ( (oStep1.fecha_partida==''||oStep1.fecha_partida==null) ? 'is-invalid' : 'is-valid' ) : '' "
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 col-sm-4 col-md-6 col-xl-6">
+                <div class="form-group">
+                  <label for="fecRet">Fecha retorno</label>
+                  <input 
+                    id="fecRet" 
+                    type="date" 
+                    class="form-control" 
+                    v-model="oStep1.fecha_retorno" 
+                    placeholder="Fecha retorno" 
+                    :class="validate ? ( (oStep1.fecha_retorno==''||oStep1.fecha_retorno==null) ? 'is-invalid' : 'is-valid' ) : '' "
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div v-show="currentstep == 2">
+
+            <section class="pricing">
+              <div class="container">
+                <div class="row">
+
+                  <!-- Free Tier -->
+                  <div v-for="(oCobertura, index, key) in oCoberturas" class="col-12 col-sm-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card mb-3 mb-lg-0">
+                      <div class="card-body">
+                        <h5 class="card-title text-muted text-uppercase text-center">{{oCobertura.tipo_plan}}</h5>
+                        <h6 class="card-price text-center">S/.{{oCobertura.precio_plan}}<span class="period">/paquete</span></h6>
+                        <hr>
+                        <ul class="fa-ul">
+
+                          <li v-for="oCaract in oCobertura.caracteristicas" :class=" oCaract.aplica ? '' : 'text-muted' ">
+                            <span class="fa-li">
+                              <i class="fas" :class=" oCaract.aplica ? 'fa-check' : 'fa-times' "></i>
+                            </span>
+                            {{oCaract.caracteristica}}
+                          </li>
+
+                        </ul>
+                        <a href="#" class="btn btn-block btn-primary text-uppercase">Elegir esta Cobertura</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+            <!--
+            <div v-for="(oCobertura, index, key) in oCoberturas" class="col-12 col-sm-12 col-md-6 col-xl-4 mb-4">
+              <div class="card text-center">
+                <div class="card-header">{{oCobertura.tipo_plan}}</div>
+                <div class="card-body">
+                  <h1 class="card-title pricing-card-title">S/.{{oCobertura.precio_plan}} <small class="text-muted">/ mo</small></h1>
+                  <table class="table table-sm table-hover">
+                    <thead>
+                      <tr><th scope="col">Caracteristica</th><th scope="col">Aplica?</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="oCaract in oCobertura.caracteristicas">
+                        <td>{{oCaract.caracteristica}}</td>
+                        <td>{{oCaract.aplica}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer text-muted"> 2 days ago </div>
+              </div>
+            </div>
+            -->
+          </div>
+
+          <div v-show="currentstep == 3">
+            <h2 class="text-center">Confirmar Cobertura elegida y pagar</h2>
+            <hr>
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h3>Política de Privacidad</h3>
+                    <p>
+                      En algunos países, las políticas de privacidad están bajo el mandato de la ley y son también una buena manera de construír la confianza de los clientes.
+                    </p>
+                  </div>
+                </div>             
+              </div>
+
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h3>Política de reembolso</h3>
+                    <p>
+                      Construir la buena voluntad y reasegurar a los clientes que están obteniendo el valor de su dinero.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <step
+            v-for="step in steps"
+            :currentstep="currentstep"
+            :key="step.id"
+            :step="step"
+            :stepcount="steps.length"
+            @step-change="stepChanged"
+          >
+          </step>
+
+          <script type="x-template" id="step-navigation-template">
+            <ol class="step-indicator">
+                <li v-for="step in steps" is="step-navigation-step" :key="step.id" :step="step" :currentstep="currentstep">
+                </li>
+            </ol>
+          </script>
+
+          <script type="x-template" id="step-navigation-step-template">
+            <li :class="indicatorclass">
+                <div class="step"><i :class="step.icon_class"></i></div>
+                <div class="caption hidden-xs hidden-sm">Paso<span v-text="step.id"></span>: <span v-text="step.title"></span></div>
+            </li>
+          </script>
+
+          <script type="x-template" id="step-template">
+            <div class="step-wrapper" :class="stepWrapperClass">
+                <button type="button" class="btn btn-info btn-step" @click="lastStep" :disabled="firststep">
+                    Paso anterior
+                </button>
+                <button type="button" class="btn btn-info btn-step float-right" @click="nextStep" v-show="!laststep" :disabled="laststep">
+                    Siguiente paso
+                </button>
+                <button type="button" onclick="location.reload()" class="btn btn-success btn-step float-right" v-if="laststep">
+                    Registrar!
+                </button>
+            </div>
+          </script>
+        </div>
+      </div>
+    </form>
+
+    <script src="js/modules.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
