@@ -98,6 +98,9 @@ const App = new Vue({
 
     search: _.debounce((loading, search, vm) => {
 
+      // Si no hay texto para consultar al servidor
+      if(!(search && search.trim())) { loading(false); return false; }
+
       var headers = new Headers({ "Content-Type": "application/json" });
       var initial = { method:"GET", headers:headers, mode:"cors", cache:"default" };
 
