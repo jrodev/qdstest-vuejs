@@ -153,3 +153,52 @@ body {
 
 /* Fix v-select border red is-invalid */
 .is-invalid .vs__dropdown-toggle { border-color: #dc3545; }
+
+
+/* Switch Button  */
+
+.onoffswitch {
+  position: relative; width: 200px;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+.onoffswitch-label {
+  display: block; overflow: hidden; cursor: pointer;
+  border: 2px solid #FCFCFC; border-radius: 29px;
+}
+.onoffswitch-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block; float: left; width: 50%; height: 51px; padding: 0; line-height: 51px;
+  font-size: 18px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: "Seleccionado";
+  padding-left: 27px;
+  background-color: #309BE3; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+  content: "Seleccionar";
+  padding-right: 27px;
+  background-color: #BBC5C7; color: #FCFCFC;
+  text-align: right;
+}
+.onoffswitch-switch {
+  display: block; width: 32px; margin: 9.5px;
+  background: #FFFFFF;
+  position: absolute; top: 0; bottom: 0;
+  right: 145px;
+  border: 2px solid #FCFCFC; border-radius: 29px;
+  transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px; 
+}

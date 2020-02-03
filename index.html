@@ -32,7 +32,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
     <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="css/styles.css?v=ds5a56ds56ds56ds" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css?v=EF744FG5SD656DF56D" />
   </head>
   <body>
 
@@ -150,7 +150,15 @@
                           </li>
 
                         </ul>
-                        <a href="#" class="btn btn-block btn-primary text-uppercase">Elegir esta Cobertura</a>
+
+                        <div class="onoffswitch" style="margin:0 auto">
+                            <input type="radio" name="rdCobertura" class="onoffswitch-checkbox" :id="'rdCobertura'+index">
+                            <label class="onoffswitch-label" :for="'rdCobertura'+index">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                        <!--a href="#" class="btn btn-block btn-primary text-uppercase">Elegir esta Cobertura</a-->
                       </div>
                     </div>
                   </div>
@@ -158,28 +166,7 @@
                 </div>
               </div>
             </section>
-            <!--
-            <div v-for="(oCobertura, index, key) in oCoberturas" class="col-12 col-sm-12 col-md-6 col-xl-4 mb-4">
-              <div class="card text-center">
-                <div class="card-header">{{oCobertura.tipo_plan}}</div>
-                <div class="card-body">
-                  <h1 class="card-title pricing-card-title">S/.{{oCobertura.precio_plan}} <small class="text-muted">/ mo</small></h1>
-                  <table class="table table-sm table-hover">
-                    <thead>
-                      <tr><th scope="col">Caracteristica</th><th scope="col">Aplica?</th></tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="oCaract in oCobertura.caracteristicas">
-                        <td>{{oCaract.caracteristica}}</td>
-                        <td>{{oCaract.aplica}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="card-footer text-muted"> 2 days ago </div>
-              </div>
-            </div>
-            -->
+
           </div>
 
           <div v-show="currentstep == 3">
@@ -207,11 +194,8 @@
                     </p>
                   </div>
                 </div>
-
               </div>
-
             </div>
-
           </div>
 
           <step
@@ -255,7 +239,7 @@
       </div>
     </form>
 
-    <script src="js/modules.js?v=56ds65ds65ds"></script>
-    <script src="js/main.js?v=56sdf56dfs65fds"></script>
+    <script src="js/modules.js?v=EF744FG5SD656DF56D"></script>
+    <script src="js/main.js?v=EF744FG5SD656DF56D"></script>
   </body>
 </html>
